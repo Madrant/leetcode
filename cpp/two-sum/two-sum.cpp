@@ -22,8 +22,8 @@ public:
             {
                 if (*first + *second == target)
                 {
-                    result.push_back(first - nums.begin());
-                    result.push_back(second - nums.begin());
+                    result.push_back(distance(nums.begin(), first));
+                    result.push_back(distance(nums.begin(), second));
 
                     return result;
                 }
