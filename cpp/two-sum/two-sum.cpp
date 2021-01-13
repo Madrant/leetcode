@@ -11,18 +11,26 @@ public:
         assert(nums.size() >= 2);
 
         int i = 0;
+        bool pair_found = false;
 
         while (i < nums.size() - 1)
         {
             if (nums[i] + nums[i + 1] == target)
             {
+                pair_found = true;
                 break;
             }
 
             i++;
         }
 
-        vector<int> result{i, i + 1};
+        vector<int> result;
+
+        if (pair_found)
+        {
+            result.push_back(i);
+            result.push_back(i + 1);
+        }
 
         return result;
     }
@@ -78,7 +86,12 @@ bool run_test(vector<int> test_set, int target, vector<int> answer)
 
 int main(int argc, char **argv)
 {
+    // Leetcode test cases:
     run_test({2, 7, 11, 15}, 9, {0, 1});
     run_test({3, 2, 4}, 6, {1, 2});
     run_test({3, 3}, 6, {0, 1});
+
+    // Additional test cases:
+    run_test({3, 2, 3}, 6, {0, 2});
+    run_test({1, 2, 3, 4, 5}, 10, {});
 }
