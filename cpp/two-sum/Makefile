@@ -11,7 +11,7 @@ CPP_FILES := $(wildcard $(SRC_DIR)/*.cpp)
 O_FILES := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(CPP_FILES))
 
 # Cross-compiler setup
-CC=g++
+CC=clang++
 AR=ar
 
 # Base name for output files (.elf, .bin, .sym, .S etc)
@@ -19,14 +19,13 @@ TARGET_NAME := $(PROJECT_NAME)
 TARGET := $(OUT_DIR)/$(TARGET_NAME)
 
 # C compiler parameters
-C_PARAMS += -O2
+C_PARAMS += -O2 -g -fsanitize=address
 
 # GCC warnings
 C_WARN += -Wall -Wextra -Wconversion -Wsign-conversion -Weffc++ -Wno-unused-function
 
 # C linker parameters
-L_PARAMS += -flto
-L_PARAMS += -Wl,--gc-sections
+L_PARAMS += -flto -Wl,--gc-sections -lasan
 
 all: build
 
