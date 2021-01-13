@@ -8,6 +8,8 @@ class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target)
     {
+        assert(nums.size() >= 2);
+
         int i = 0;
 
         while (i < nums.size() - 1)
@@ -16,33 +18,67 @@ public:
             {
                 break;
             }
+
+            i++;
         }
 
-        vector<int> v{i, i + 1};
+        vector<int> result{i, i + 1};
 
-        return v;
+        return result;
     }
 };
 
-int main(int argc, char **argv)
+void print_vector(string prefix, vector<int>& v, bool noendl = true)
 {
-    cout << "Hello"  << endl;
+    auto it = v.begin();
 
-    vector<int> test_set { 2, 7, 11, 15 };
+    cout << prefix << "size: " << v.size() << ": [";
 
-    Solution s;
-    auto result = s.twoSum(test_set, 9);
-
-    auto it = result.begin();
-
-    cout << "Results: " << result.size() << endl;
-
-    while (it != result.end())
+    while (it != v.end())
     {
-        cout << *it << endl;
+        cout << *it;
         it++;
+
+        if (it != v.end())
+        {
+            cout << ", ";
+        }
     }
 
-    assert(result[0] == 0);
-    assert(result[1] == 1);
+    cout << "] ";
+
+    if (!noendl)
+    {
+        cout << endl;
+    }
+}
+
+inline bool result_is_correct(vector<int>& result, vector<int>& answer)
+{
+    return result == answer;
+}
+
+bool run_test(vector<int> test_set, int target, vector<int> answer)
+{
+    assert(test_set.size() >= 2);
+
+    Solution s;
+    auto result = s.twoSum(test_set, target);
+
+    cout << "Target: " << target << " ";
+    print_vector("Data: ", test_set);
+    print_vector("Result: ", result);
+
+    bool solution_correct = result_is_correct(result, answer);
+
+    cout << ": " << (solution_correct ? "Correct" : "Incorrect") << endl;
+
+    return solution_correct;
+}
+
+int main(int argc, char **argv)
+{
+    run_test({2, 7, 11, 15}, 9, {0, 1});
+    run_test({3, 2, 4}, 6, {1, 2});
+    run_test({3, 3}, 6, {0, 1});
 }
