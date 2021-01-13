@@ -15,10 +15,10 @@ public:
         // Take first number
         while (first != nums.end())
         {
-            auto second = first;
+            auto second = first + 1;
 
             // Check it with each second
-            while (second++ != nums.end())
+            while (second != nums.end())
             {
                 if (*first + *second == target)
                 {
@@ -27,6 +27,8 @@ public:
 
                     return result;
                 }
+
+                second++;
             }
 
             first++;
