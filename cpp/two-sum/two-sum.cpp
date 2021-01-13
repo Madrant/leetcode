@@ -8,28 +8,28 @@ class Solution {
 public:
     vector<int> twoSum(vector<int>& nums, int target)
     {
-        assert(nums.size() >= 2);
-
-        int i = 0;
-        bool pair_found = false;
-
-        while (i < nums.size() - 1)
-        {
-            if (nums[i] + nums[i + 1] == target)
-            {
-                pair_found = true;
-                break;
-            }
-
-            i++;
-        }
-
         vector<int> result;
 
-        if (pair_found)
+        auto first = nums.begin();
+
+        // Take first number
+        while (first != nums.end())
         {
-            result.push_back(i);
-            result.push_back(i + 1);
+            auto second = first;
+
+            // Check it with each second
+            while (second++ != nums.end())
+            {
+                if (*first + *second == target)
+                {
+                    result.push_back(first - nums.begin());
+                    result.push_back(second - nums.begin());
+
+                    return result;
+                }
+            }
+
+            first++;
         }
 
         return result;
@@ -70,11 +70,12 @@ bool run_test(vector<int> test_set, int target, vector<int> answer)
 {
     assert(test_set.size() >= 2);
 
+    cout << "Target: " << target << " ";
+    print_vector("Data: ", test_set);
+
     Solution s;
     auto result = s.twoSum(test_set, target);
 
-    cout << "Target: " << target << " ";
-    print_vector("Data: ", test_set);
     print_vector("Result: ", result);
 
     bool solution_correct = result_is_correct(result, answer);
