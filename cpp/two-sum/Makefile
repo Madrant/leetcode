@@ -40,14 +40,14 @@ $(OBJ_DIR)/%.o: %.cpp
 $(TARGET): $(O_FILES)
 # Link object files
 	@echo "# Linking '$(TARGET)'"
-	$(CC) $(L_PARAMS) -o $(TARGET) $(O_FILES)
+	$(CC) $(L_PARAMS) -o $(TARGET).elf $(O_FILES)
 
 # Show sections size
 	@echo "# Binary info"
-	size $(TARGET)
+	size $(TARGET).elf
 
 .PHONY: clean
 clean:
 	@echo "# Cleaning build-time generated files"
 	rm -f $(OBJ_DIR)/*.o
-	rm -f $(OUT_DIR)/$(TARGET)
+	rm -f $(OUT_DIR)/$(TARGET).elf
