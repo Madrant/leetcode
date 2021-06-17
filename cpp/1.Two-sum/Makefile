@@ -27,10 +27,14 @@ C_WARN += -Wall -Wextra -Wconversion -Wsign-conversion -Weffc++ -Wno-unused-func
 # C linker parameters
 L_PARAMS += -flto -Wl,--gc-sections -lasan
 
-all: build
+all: prep build
 
 .PHONY: build
 build: $(TARGET)
+
+.PHONY: prep
+prep:
+	mkdir -p $(OBJ_DIR)
 
 $(OBJ_DIR)/%.o: %.cpp
 	@echo "# $<:"
@@ -49,4 +53,4 @@ $(TARGET): $(O_FILES)
 clean:
 	@echo "# Cleaning build-time generated files"
 	rm -f $(OBJ_DIR)/*.o
-	rm -f $(OUT_DIR)/$(TARGET).elf
+	rm -f $(OUT_DIR)/$(TARGET_NAME).elf
