@@ -32,3 +32,6 @@ a.out
 *.exe
 *.out
 *.app
+
+# Compiled Python modules
+*.pyc
