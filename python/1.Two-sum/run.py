@@ -40,11 +40,14 @@ def test_solution(class_name):
 
     time.stop()
 
-    # Print results
-    #
+    if indices is None:
+        print("No result")
+        return
+
     # Get int values by returned indices
     values = [nums[idx] for idx in indices]
 
+    # Print results
     print("Result: Indices: %s Values: %s Sum: %u" %
         (str(indices), str(values), sum(values)))
 
