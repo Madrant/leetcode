@@ -17,7 +17,7 @@ class Stopwatch:
     def print(self):
         print("Execution time: %u sec %u usec" % (self.time.seconds, self.time.microseconds))
 
-# Solution
+# Straightforward solution
 class Solution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
 
@@ -29,6 +29,24 @@ class Solution:
 
                 if first + second == target:
                     return [i, j]
+
+# Dictionary based solution
+class DictSolution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+
+        d = {}
+
+        for (first_idx, first) in enumerate(nums):
+            second = target - first
+
+            # Check if second value is in dictionary
+            if second in d:
+                # Return saved index of a second value
+                # and current index
+                return [d[second], first_idx]
+            else:
+                # Store index of a first value
+                d[first] = first_idx
 
 # Test function
 def test_solution(class_name):
@@ -43,6 +61,8 @@ def test_solution(class_name):
     if indices is None:
         print("No result")
         return
+
+    print("Result: Indices: %s" % (str(indices)))
 
     # Get int values by returned indices
     values = [nums[idx] for idx in indices]
@@ -74,5 +94,6 @@ if __name__ == "__main__":
     # Print input parameters
     print("Target: %i Integers: %s" % (target, str(nums)))
 
-    # Test solution:
+    # Test solutions:
     test_solution(Solution)
+    test_solution(DictSolution)
