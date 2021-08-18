@@ -116,6 +116,68 @@ class FastSolution(SolutionBase):
         # At least the number is a prime number
         return True
 
+class FastestSolution(SolutionBase):
+
+    # overrides SolutionBase
+    def countPrimes(self, n: int, debug = False) -> int:
+        """ Count prime numbers up to n """
+
+        # An array marking sequential numbers 0 up to n as primes or not
+        #
+        # Skip 0 and 1 as not prime numbers
+        is_primes = [True if n not in (0,1) else False for n in range(0,n)]
+
+        # 0 and 1 is not prime numbers
+#        is_primes[0] = False
+#        is_primes[1] = False
+
+        # A square root of n to iterate over
+        s = int(n ** (1/2))
+        if debug: print(f"s: {s}")
+
+        # i is a sequential numbers from 2 to sqrt(n):
+        #
+        # for n = 20, s = 4
+        #
+        # i will be [2, 3, 4] -> a base to generate and mark non-prime products
+        i_values = [i for i in range(2, s + 1)]
+
+        # Alternate way to generate i values:
+        # i_values = [i for i in range(2, n) if i * i < n]
+
+        if debug: print(f"i: {i_values}")
+
+        for i in i_values:
+            # Skip values already marked as non-prime
+            if is_primes[i] == False:
+                continue
+
+            # Generate j as a product of i:
+            #
+            # for n = 20
+            #
+            # for i = 2, j will be [4, 6, 8, 10, 12, 14, 16, 18] -> marked as non-primes
+            # for i = 3, j will be [9, 12, 15, 18] -> marked as non-primes
+            j_values = [j for j in range(i * i, n, i)]
+            if debug: print(f"i: {i} j: {j_values}")
+
+            # Mark each value with index j as non-prime
+            for j in j_values:
+                is_primes[j] = False
+
+        # Count values still marked as primes
+        primes_count = is_primes.count(True)
+
+        # Show indexes, values and flags in debug mode
+        if debug:
+            nums = [n for n in range(0, n)]
+
+            for i, (val, is_prime) in enumerate(zip(nums, is_primes)):
+                prime_str = "Prime" if is_prime else "Not Prime"
+                print(f"{i:02}: {val}: {prime_str}")
+
+        return primes_count
+
 # Main
 if __name__ == "__main__":
     print("Arguments: %s" % (str(sys.argv)))
@@ -129,6 +191,6 @@ if __name__ == "__main__":
     print(f"Num: {num}")
 
     # Test solutions:
-    s = FastSolution()
+    s = FastestSolution()
     primes_count = s.countPrimes(num)
     print(f"Primes number for a {num}: {primes_count}")
