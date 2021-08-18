@@ -2,14 +2,39 @@
 
 import unittest
 
-from run import FastSolution as Solution
+from run import NaiveSolution, FastSolution, FastestSolution
 
 class SolutionTest(unittest.TestCase):
 
     def setUp(self):
-        self.solution = Solution()
+        self.solution = None
+
+    def test_2_countPrimes(self):
+        if not self.solution:
+            return
+
+        self.assertEqual(self.solution.countPrimes(0), 0)
+        self.assertEqual(self.solution.countPrimes(1), 0)
+        self.assertEqual(self.solution.countPrimes(2), 0)
+        self.assertEqual(self.solution.countPrimes(3), 1)
+        self.assertEqual(self.solution.countPrimes(4), 2)
+        self.assertEqual(self.solution.countPrimes(5), 2)
+        self.assertEqual(self.solution.countPrimes(6), 3)
+        self.assertEqual(self.solution.countPrimes(7), 3)
+        self.assertEqual(self.solution.countPrimes(8), 4)
+        self.assertEqual(self.solution.countPrimes(9), 4)
+        self.assertEqual(self.solution.countPrimes(10), 4)
+
+        # There are 500 prime numbers before 3572
+        self.assertEqual(self.solution.countPrimes(3572), 500)
+
+class NaiveSolutionTest(SolutionTest):
+
+    def setUp(self):
+        self.solution = NaiveSolution()
 
     def test_1_isPrime(self):
+        return
         # 0 and 1 is not a prime numbers
         self.assertFalse(self.solution.isPrime(0))
         self.assertFalse(self.solution.isPrime(1))
@@ -34,13 +59,15 @@ class SolutionTest(unittest.TestCase):
 
         self.assertTrue(self.solution.isPrime(3571))
 
-    def test_2_countPrimes(self):
-        self.assertEqual(self.solution.countPrimes(0), 0)
-        self.assertEqual(self.solution.countPrimes(1), 0)
-        self.assertEqual(self.solution.countPrimes(10), 4)
+class NaiveSolutionTest(NaiveSolutionTest):
 
-        # There are 500 prime numbers before 3572
-        self.assertEqual(self.solution.countPrimes(3572), 500)
+    def setUp(self):
+        self.solution = FastSolution()
+
+class FastestSolutionTest(SolutionTest):
+
+    def setUp(self):
+        self.solution = FastestSolution()
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity = 2)
