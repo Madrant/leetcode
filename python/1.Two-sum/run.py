@@ -30,6 +30,16 @@ class Solution:
                 if first + second == target:
                     return [i, j]
 
+# List index based solution
+class IndexSolution:
+    def twoSum(seld, nums: List[int], target: int) -> List[int]:
+        for i, val in enumerate(nums):
+            second = target - val
+
+            if second in nums and nums.index(second) != i:
+                return [i, nums.index(second)]
+        return []
+
 # Dictionary based solution
 class DictSolution:
     def twoSum(self, nums: List[int], target: int) -> List[int]:
@@ -96,4 +106,5 @@ if __name__ == "__main__":
 
     # Test solutions:
     test_solution(Solution)
+    test_solution(IndexSolution)
     test_solution(DictSolution)
